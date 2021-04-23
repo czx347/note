@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SingletonPattern</title>
+</head>
+<body>
+<script>
+    const Man = function () {
+        this.description = '男人';
+    }
+    Man.prototype.getDesc = function () {
+        console.log('这是' + this.description);
+    }
+
+    const Woman = function () {
+        this.description = '女人';
+    }
+    Woman.prototype.getDesc = function () {
+        console.info('这是' + this.description);
+    }
+
+    const Robot = function () {
+        this.description = '机器人';
+    }
+    Robot.prototype.getDesc = function () {
+        console.info('这是' + this.description);
+    }
+
+    const Nvwa = function (type) {
+        let create = null;
+        switch (type) {
+            case 'M':
+                create = new Man();
+                break;
+            case 'W':
+                create = new Woman();
+                break;
+            case 'R':
+                create = new Robot();
+                break;
+        }
+
+        return create;
+    }
+
+    // 简单工厂应用
+    const man = Nvwa('M');
+    console.log(man);
+    console.log(man.description);
+    man.getDesc();
+
+    const robot = Nvwa('R');
+    console.log(robot);
+    console.log(robot.description);
+    robot.getDesc();
+</script>
+
+</body>
+</html>

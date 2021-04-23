@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FactoryMethodPattern</title>
+</head>
+<body>
+<script>
+    const Factory = function (type, content) {
+        if (this instanceof Factory) {
+            const ad = new this[type](content);
+            return ad;
+        } else {
+            return new Factory(type, content);
+        }
+    }
+
+    Factory.prototype = {
+        Haier: function (content) {
+            console.log('Haier工厂生产了' + content);
+        },
+        Midea: function (content) {
+            console.log('Midea工厂生产了' + content);
+        }
+    }
+
+    // 工厂方法模式应用
+    const airCondition = new Factory('Haier', 'HaierAirCondition');
+</script>
+</body>
+</html>

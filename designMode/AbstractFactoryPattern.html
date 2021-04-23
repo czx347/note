@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AbstractFactoryPattern</title>
+</head>
+<body>
+<script>
+    const VehicleFactory = function (subType, superType) {
+        // 判断抽象工厂中是否有该抽象类
+        if (typeof VehicleFactory[superType] === 'function') {
+            // 缓存类
+            const F = function () {}
+            // 继承父类属性和方法
+            F.prototype = new VehicleFactory[superType]();
+            // 将子类constructor指向子类
+            subType.constructor = subType;
+            // 子类原型继承父类
+            subType.prototype = new F();
+            subType.uber = superType.prototype;
+        } else {
+            throw new Error('未创建该抽象类！');
+        }
+    }
+
+    // 抽象父类 - 1
+    VehicleFactory.Computer = function () {
+        this.type = '电脑';
+    }
+    VehicleFactory.Computer.prototype = {
+        getBrand: function () {
+            return new Error('抽象方法不能调用！');
+        },
+        getModel: function () {
+            return new Error('抽象方法不能调用！');
+        }
+    }
+    // 抽象父类 - 2
+    // VehicleFactory.CPU = function () {
+    //     this.type = '处理器';
+    // }
+    // VehicleFactory.CPU.prototype = {
+    //     getBrand: function () {
+    //         return new Error('抽象方法不能调用！');
+    //     },
+    //     getModel: function () {
+    //         return new Error('抽象方法不能调用！');
+    //     }
+    // }
+
+    // 子类 - 1
+    const Menory = function (brand, model) {
+        this.brand = brand;
+        this.model = model;
+    }
+    // 抽象工厂实现对 Computer 抽象类的继承
+    VehicleFactory(Menory, 'Computer');
+    // 必须在抽象实现后重写
+    Menory.prototype.getBrand = function () {
+        console.log('品牌是' + this.brand);
+    }
+    Menory.prototype.getModel = function () {
+        console.log('型号是' + this.model);
+    }
+
+    // 子类 - 2
+    const CPU = function (brand, model) {
+        this.brand = brand;
+        this.model = model;
+    }
+    VehicleFactory(CPU, 'Computer');
+    CPU.prototype = {
+        getBrand: function () {
+            console.log('品牌是' + this.brand);
+        },
+        getModel: function () {
+            console.log('型号是' + this.model);
+        }
+    }
+
+    // 抽象工厂模式应用
+    const menory = new Menory('三星', 'A');
+    console.log(menory);
+    console.log(menory.brand);
+    menory.getBrand();
+    menory.getModel();
+    // Result
+    // BMW {price: "1,000,000", speed: "500"}
+    // 1,000,000
+    // $1,000,000
+    // 500km/h
+
+</script>
+
+</body>
+</html>
