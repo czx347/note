@@ -10,38 +10,41 @@
         this.description = '男人';
     }
     Man.prototype.getDesc = function () {
-        console.log('这是' + this.description);
+        console.log(('这是' + this.description);
     }
 
     const Woman = function () {
         this.description = '女人';
     }
     Woman.prototype.getDesc = function () {
-        console.info('这是' + this.description);
+        console.log('这是' + this.description);
     }
 
     const Robot = function () {
         this.description = '机器人';
     }
     Robot.prototype.getDesc = function () {
-        console.info('这是' + this.description);
+        console.log('这是' + this.description);
     }
 
     const Nvwa = function (type) {
-        let create = null;
+        let Person = null;
         switch (type) {
             case 'M':
-                create = new Man();
+                Person = new Man();
                 break;
             case 'W':
-                create = new Woman();
+                Person = new Woman();
                 break;
             case 'R':
-                create = new Robot();
+                Person = new Robot();
+                break;
+            default:
+                return new Error('没有该类！');
                 break;
         }
 
-        return create;
+        return Person;
     }
 
     // 简单工厂应用

@@ -6,13 +6,13 @@
 </head>
 <body>
 <script>
-    const VehicleFactory = function (subType, superType) {
+    const Factory = function (subType, superType) {
         // 判断抽象工厂中是否有该抽象类
-        if (typeof VehicleFactory[superType] === 'function') {
+        if (typeof Factory[superType] === 'function') {
             // 缓存类
             const F = function () {}
             // 继承父类属性和方法
-            F.prototype = new VehicleFactory[superType]();
+            F.prototype = new Factory[superType]();
             // 将子类constructor指向子类
             subType.constructor = subType;
             // 子类原型继承父类
@@ -24,71 +24,80 @@
     }
 
     // 抽象父类 - 1
-    VehicleFactory.Computer = function () {
-        this.type = '电脑';
+    Factory.ComputerFactory = function () {
+        this.type = 'ComputerFactory';
     }
-    VehicleFactory.Computer.prototype = {
-        getBrand: function () {
+    Factory.ComputerFactory.prototype = {
+        productMenory: function () {
             return new Error('抽象方法不能调用！');
         },
-        getModel: function () {
+        productCPU: function () {
             return new Error('抽象方法不能调用！');
         }
     }
-    // 抽象父类 - 2
-    // VehicleFactory.CPU = function () {
-    //     this.type = '处理器';
-    // }
-    // VehicleFactory.CPU.prototype = {
-    //     getBrand: function () {
-    //         return new Error('抽象方法不能调用！');
-    //     },
-    //     getModel: function () {
-    //         return new Error('抽象方法不能调用！');
-    //     }
-    // }
 
     // 子类 - 1
-    const Menory = function (brand, model) {
-        this.brand = brand;
-        this.model = model;
+    const PCFactory = function () {
+        this.type = "PC";
     }
-    // 抽象工厂实现对 Computer 抽象类的继承
-    VehicleFactory(Menory, 'Computer');
+    // 抽象工厂实现对 ComputerFactory 抽象类的继承
+    Factory(PCFactory, 'ComputerFactory');
     // 必须在抽象实现后重写
-    Menory.prototype.getBrand = function () {
-        console.log('品牌是' + this.brand);
+    PCFactory.prototype.productMenory = function (brand, model) {
+        return new Menory(brand, model);
     }
-    Menory.prototype.getModel = function () {
-        console.log('型号是' + this.model);
+    PCFactory.prototype.productCPU = function (brand, model) {
+        return new CPU(brand, model);
     }
 
     // 子类 - 2
-    const CPU = function (brand, model) {
-        this.brand = brand;
-        this.model = model;
+    const MacFactory = function () {
+        this.type = "Mac";
     }
-    VehicleFactory(CPU, 'Computer');
-    CPU.prototype = {
-        getBrand: function () {
-            console.log('品牌是' + this.brand);
-        },
-        getModel: function () {
-            console.log('型号是' + this.model);
-        }
+    // 抽象工厂实现对 ComputerFactory 抽象类的继承
+    Factory(MacFactory, 'ComputerFactory');
+    // 必须在抽象实现后重写
+    MacFactory.prototype.productMenory = function (brand, model) {
+        return new Menory(brand, model);
+    }
+    MacFactory.prototype.productCPU = function (brand, model) {
+        return new CPU(brand, model);
     }
 
+    function Menory(brand, model) {
+        this.brand = brand;
+        this.model = model;
+        this.getBrand = function () {
+            console.log('品牌是' + this.brand);
+        };
+        this.getModel = function () {
+            console.log('型号是' + this.model);
+        };
+    }
+
+    function CPU(brand, model) {
+        this.brand = brand;
+        this.model = model;
+        this.getBrand = function () {
+            console.log('品牌是' + this.brand);
+        };
+        this.getModel = function () {
+            console.log('型号是' + this.model);
+        };
+    }
+
+
+
+
     // 抽象工厂模式应用
-    const menory = new Menory('三星', 'A');
+    const pCFactory = new PCFactory();
+    const menory = pCFactory.productMenory('三星内存', 'M1');
+    const cpu = pCFactory.productCPU('三星处理器', 'C1');
+    console.log(pCFactory);
     console.log(menory);
-    console.log(menory.brand);
+    console.log(cpu);
     menory.getBrand();
     menory.getModel();
-    // Result
-    // BMW {price: "1,000,000", speed: "500"}
-    // 1,000,000
-    // $1,000,000
-    // 500km/h
 
 </script>
 

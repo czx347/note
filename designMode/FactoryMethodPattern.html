@@ -6,26 +6,48 @@
 </head>
 <body>
 <script>
-    const Factory = function (type, content) {
-        if (this instanceof Factory) {
-            const ad = new this[type](content);
-            return ad;
-        } else {
-            return new Factory(type, content);
-        }
+    function haierAirCondition() {
+        this.name = "海尔空调";
     }
 
+    function mideaAirCondition() {
+        this.name = "美的空调";
+    }
+
+    const Factory = function (type) {
+        if (this instanceof Factory) {
+            if(typeof this[type] === 'function'){
+                return new this[type]();
+            }else {
+                return new Error('没有该工厂！');
+            }
+        } else {
+            return new Factory(type);
+        }
+    };
     Factory.prototype = {
-        Haier: function (content) {
-            console.log('Haier工厂生产了' + content);
+        Haier: function () {
+            this.name = "海尔工厂";
+            this.productAirCondition = function() {
+                console.log('海尔工厂生产了海尔空调');
+                return new haierAirCondition();
+            }
         },
         Midea: function (content) {
-            console.log('Midea工厂生产了' + content);
+            this.name = "美的工厂";
+            this.productAirCondition = function() {
+                console.log('美的工厂生产了美的空调');
+                return new mideaAirCondition();
+            }
         }
     }
 
+
     // 工厂方法模式应用
-    const airCondition = new Factory('Haier', 'HaierAirCondition');
+    const haierFactory = new Factory('Haier');
+    console.log(haierFactory);
+    const airCondition = haierFactory.productAirCondition();
+    console.log(airCondition);
 </script>
 </body>
 </html>
