@@ -6,57 +6,26 @@
 </head>
 <body>
 <script>
-    const Man = function () {
-        this.description = '男人';
-    }
-    Man.prototype.getDesc = function () {
-        console.log(('这是' + this.description);
-    }
-
-    const Woman = function () {
-        this.description = '女人';
-    }
-    Woman.prototype.getDesc = function () {
-        console.log('这是' + this.description);
-    }
-
-    const Robot = function () {
-        this.description = '机器人';
-    }
-    Robot.prototype.getDesc = function () {
-        console.log('这是' + this.description);
-    }
-
-    const Nvwa = function (type) {
-        let Person = null;
-        switch (type) {
-            case 'M':
-                Person = new Man();
-                break;
-            case 'W':
-                Person = new Woman();
-                break;
-            case 'R':
-                Person = new Robot();
-                break;
-            default:
-                return new Error('没有该类！');
-                break;
+    const LoginForm = function(name, password){ //创建一个对象
+        this.name = name;
+        this.password = password;
+    };
+    LoginForm.prototype.login = function(){
+        console.log("打开成功");
+    };
+    LoginForm.getInstance = function(name, password){
+        if(!this.instance){
+            this.instance = new LoginForm(name, password);
+            return this.instance;
         }
+        return new Error('程序已运行!');
+    };
 
-        return Person;
-    }
+    const a = LoginForm.getInstance( '123', '123');
+    const b = LoginForm.getInstance( '12', '123');
 
-    // 简单工厂应用
-    const man = Nvwa('M');
-    console.log(man);
-    console.log(man.description);
-    man.getDesc();
-
-    const robot = Nvwa('R');
-    console.log(robot);
-    console.log(robot.description);
-    robot.getDesc();
+    a.login();
+    console.log(b);
 </script>
 
 </body>

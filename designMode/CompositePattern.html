@@ -2,9 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>CompositePattern</title>
 </head>
 <body>
+<script>
+    const TextFile = {
+        check: function(){
+            console.log( '检查文本文件' );
+        }
+    }
 
+    const ImageFile = {
+        check: function(){
+            console.log( '检查图片文件' );
+        }
+    };
+
+    const MediaFile = {
+        check: function(){
+            console.log( '检查音频视频文件' );
+        }
+    };
+
+
+    const Folder = function(){
+        return {
+            Files: [],
+            add: function( command ){
+                this.Files.push( command );
+            },
+            check: function(){
+                this.Files.forEach((e) => {
+                    e.check();
+                })
+            }
+        }
+    }
+
+    const AntiVirus = Folder();
+    AntiVirus.add( TextFile );
+    AntiVirus.add( ImageFile );
+    const folder = Folder();
+    folder.add( MediaFile );
+    folder.add( TextFile );
+    AntiVirus.add( folder );
+    AntiVirus.check();
+</script>
 </body>
 </html>

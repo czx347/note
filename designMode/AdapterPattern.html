@@ -2,9 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>AdapterPattern</title>
 </head>
 <body>
+<script>
+    const QuickSort = {
+        quickSort: function(){
+            console.log( '快速排序算法' );
+        }
+    };
+    const BinarySearch  = {
+        binarySearch: function(){
+            console.log( '二分查找算法' );
+        }
+    };
+    const BinarySearchAdapter = {
+        quickSort: function(){
+            return BinarySearch.binarySearch();
 
+        }
+    };
+
+    const DataOperation = function( operation ){
+        if ( operation.quickSort instanceof Function ){
+            operation.quickSort();
+        }
+    };
+
+    DataOperation( QuickSort );
+    DataOperation( BinarySearchAdapter );
+</script>
 </body>
 </html>
