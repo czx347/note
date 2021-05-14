@@ -2,9 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>DecoratorPattern</title>
 </head>
 <body>
+<script>
+    function Book() {
+        console.log('我是书！');
+    }
 
+    function BookDecorator(book) {
+        book.borrowBook = function() {
+            console.log('借书');
+        };
+        book.returnBook = function() {
+            console.log('还书');
+        }
+
+        return book;
+    }
+
+    function newBook(book) {
+        book.freeze = function () {
+            console.log('冻结');
+        };
+        book.lose = function () {
+            console.log('遗失');
+        };
+
+        return book;
+    }
+
+
+    let book = new BookDecorator(new Book);
+    book = new newBook(book);
+    book.borrowBook();
+    book.returnBook();
+    book.freeze();
+    book.lose();
+
+</script>
 </body>
 </html>

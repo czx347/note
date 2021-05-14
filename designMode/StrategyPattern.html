@@ -5,6 +5,55 @@
     <title>Title</title>
 </head>
 <body>
+<script>
+  const ComputerBookDiscount = (number, price) => {
+    return number * price * 0.9;
+  }
 
+  const LanguageBookDiscount = (number, price) => {
+    return number * (price - 2);
+  }
+
+  const NovelBookDiscount = (number, price) => {
+    const totalPrice = number * price;
+    if (totalPrice >= 100) {
+      let discountNumber = Math.floor(totalPrice / 100);
+      return totalPrice - 10 * discountNumber;
+    }
+    return totalPrice;
+  }
+
+  class BookStore{
+    constructor(bookList){
+      this.ComputerBook = 10;
+      this.LanguageBook = 20;
+      this.NovelBook = 15;
+    }
+
+    buyBook(bookList){
+      this.getTotalPrice(bookList);
+    }
+
+    getTotalPrice(bookList){
+      const ComputerBookPrice = ComputerBookDiscount(bookList.ComputerBookPrice, this.ComputerBook);
+      const LanguageBookPrice = LanguageBookDiscount(bookList.LanguageBookPrice, this.LanguageBook);
+      const NovelBookPrice = NovelBookDiscount(bookList.NovelBookPrice, this.NovelBook);
+      console.log("计算机类图书价格是：" + (ComputerBookPrice))
+      console.log("语言类图书价格是：" + (LanguageBookPrice))
+      console.log("小说类图书价格是：" + (NovelBookPrice))
+      console.log("总价格是：" + (ComputerBookPrice + LanguageBookPrice + NovelBookPrice))
+    }
+  }
+
+  const bookList = {
+    ComputerBookPrice: 2,
+    LanguageBookPrice: 2,
+    NovelBookPrice: 10,
+  }
+
+  const bookStore = new BookStore();
+  bookStore.buyBook(bookList);
+
+</script>
 </body>
 </html>

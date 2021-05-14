@@ -2,9 +2,70 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>commandPattern</title>
 </head>
 <body>
+<script>
+    const BoardScreen = {
+      open:() => {
+        console.log("打开命令")
+      },
+      create:() => {
+        console.log("新建命令")
+      },
+      edit:() => {
+        console.log("编辑命令")
+      }
+    }
 
+    const OpenCommand = {
+      boardScreen: BoardScreen,
+      execute: function(){
+        this.boardScreen.open();
+      }
+    }
+
+    const CreateCommand = {
+      boardScreen: BoardScreen,
+      execute: function(){
+        this.boardScreen.create();
+      }
+    }
+
+    const EditCommand = {
+      boardScreen: BoardScreen,
+      execute: function(){
+        this.boardScreen.edit();
+      }
+    }
+
+    const Menu = {
+      MenuItemsList : {},
+      addMenuItem: function (MenuName, MenuItem){
+        this.MenuItemsList[MenuName] = MenuItem;
+      },
+    }
+
+    function MenuItem(menuItem) {
+      this.menuItem = menuItem;
+      this.click = () => {
+        this.menuItem.execute();
+      };
+    }
+
+    const open = new MenuItem(OpenCommand);
+    const create = new MenuItem(CreateCommand);
+    const edit = new MenuItem(EditCommand);
+    Menu.addMenuItem("open",open);
+    Menu.addMenuItem("create",create);
+    Menu.addMenuItem("edit",edit);
+    Menu.MenuItemsList.open.click();
+    Menu.MenuItemsList.create.click();
+    Menu.MenuItemsList.edit.click();
+
+
+
+
+</script>
 </body>
 </html>

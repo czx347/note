@@ -2,9 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>FacadePattern</title>
 </head>
 <body>
+<script>
+   const Memory = {
+    check:() => {
+      console.log("内存的自检成功。");
+      return true;
+    }
+  }
 
+   const CPU ={
+    run:() => {
+      console.log("CPU运行成功。");
+      return true;
+    }
+  }
+
+   const HardDisk = {
+    read:() => {
+      console.log("硬盘读取成功。");
+      return true;
+    }
+  }
+
+  const OS = {
+    load:() => {
+      console.log("操作系统载入成功。");
+      return true;
+    }
+  }
+
+  const Mainframe = {
+    on:() => {
+      if (Memory.check() && CPU.run() && HardDisk.read() && OS.load())
+      {
+        console.log("启动成功");
+      }else {
+        console.log("启动失败");
+      }
+    }
+  }
+
+  Mainframe.on();
+
+</script>
 </body>
 </html>

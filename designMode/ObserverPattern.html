@@ -2,9 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>ObserverPattern</title>
 </head>
 <body>
+<script>
+  class ShareA {
+    constructor(price) {
+      this.price = price;
+      this.users = [];
+    }
 
+    addSharer(user) {
+      this.users.push(user);
+    }
+
+    changePrice(newPrice) {
+      const change = (newPrice - this.price) * 100 / this.price;
+      if (change <= -5) {
+        this.NotifyUsers("股票A跌了。");
+      } else if (change >= 5) {
+        this.NotifyUsers("股票A涨了。");
+      }
+      this.price = newPrice;
+    }
+
+    NotifyUsers(notice) {
+      this.users.forEach((e) => {
+        e.notify(notice);
+      })
+    }
+  }
+
+  class Xiaoming {
+    notify(notice) {
+      console.log(notice);
+    }
+  }
+
+  const shareA = new ShareA(100);
+  shareA.addSharer(new Xiaoming);
+  shareA.changePrice(101);
+  shareA.changePrice(120);
+  shareA.changePrice(100);
+
+
+</script>
 </body>
 </html>

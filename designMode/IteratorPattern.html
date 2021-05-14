@@ -2,9 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>IteratorPattern</title>
 </head>
 <body>
+<script>
+  class Iterator {
+    constructor(container) {
+      this.list = container.list;
+      this.index = 0;
+    }
 
+    next() {
+      if (this.hasNext()) {
+        return this.list[this.index++];
+      }
+      return new Error("溢出错误！");
+    }
+
+    hasNext() {
+      return this.index < this.list.length;
+    }
+
+    previous() {
+      if (this.hasPrevious()) {
+        return this.list[this.index--];
+      }
+      return new Error("溢出错误！");
+    }
+
+    hasPrevious() {
+      return this.index >= 0;;
+    }
+  }
+
+  class Container {
+    constructor(list) {
+      this.list = list;
+    }
+
+    getIterator() {
+      return new Iterator(this);
+    }
+  }
+
+  let arr = ["面包", "饮料", "水果", "冰淇淋", "鸡腿", "盒饭"];
+  let container = new Container(arr);
+  let iterator = container.getIterator()
+  while(iterator.hasNext()){
+    console.log(iterator.next())
+  }
+  while(iterator.hasPrevious()){
+    console.log(iterator.previous())
+  }
+</script>
 </body>
 </html>
